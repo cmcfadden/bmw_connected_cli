@@ -1,0 +1,2 @@
+bimmer_connected==0.8.7
+requests==2.26.0
