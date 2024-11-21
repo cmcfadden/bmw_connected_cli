@@ -127,7 +127,11 @@ async def get_status(args) -> None:
             logging.root.removeHandler(handler)
 
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     if args.lat and args.lng:
         account.set_observer_position(args.lat, args.lng)
@@ -163,9 +167,10 @@ async def fingerprint(args) -> None:
     time_dir.mkdir(parents=True)
 
     account = MyBMWAccount(
-        args.username,
-        args.password,
-        get_region_from_name(args.region),
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+	hcaptcha_token=args.captcha,
         log_responses=time_dir,
         use_metric_units=(not args.imperial),
     )
@@ -197,7 +202,11 @@ async def fingerprint(args) -> None:
 async def light_flash(args) -> None:
     """Trigger the vehicle to flash its lights."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     await account.get_vehicles()
     vehicle = get_vehicle_or_return(account, args.vin)
@@ -208,7 +217,11 @@ async def light_flash(args) -> None:
 async def remote_lock(args) -> None:
     """Trigger the vehicle to lock."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     await account.get_vehicles()
     vehicle = get_vehicle_or_return(account, args.vin)
@@ -219,7 +232,11 @@ async def remote_lock(args) -> None:
 async def remote_unlock(args) -> None:
     """Trigger the vehicle to unlock."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     await account.get_vehicles()
     vehicle = get_vehicle_or_return(account, args.vin)
@@ -230,7 +247,11 @@ async def remote_unlock(args) -> None:
 async def climatize(args) -> None:
     """Trigger the vehicle to climatize."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     await account.get_vehicles()
     vehicle = get_vehicle_or_return(account, args.vin)
@@ -241,7 +262,11 @@ async def climatize(args) -> None:
 async def vehicle_finder(args) -> None:
     """Trigger the vehicle finder to locate it."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     account.set_observer_position(args.lat, args.lng)
     await account.get_vehicles()
@@ -255,7 +280,11 @@ async def vehicle_finder(args) -> None:
 async def image(args) -> None:
     """Download a rendered image of the vehicle."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     await account.get_vehicles()
     vehicle = get_vehicle_or_return(account, args.vin)
@@ -271,7 +300,11 @@ async def image(args) -> None:
 async def send_poi(args) -> None:
     """Send Point Of Interest to car."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     await account.get_vehicles()
     vehicle = get_vehicle_or_return(account, args.vin)
@@ -291,7 +324,11 @@ async def send_poi(args) -> None:
 async def send_poi_from_address(args) -> None:
     """Create Point of Interest from OSM Nominatim and send to car."""
     account = MyBMWAccount(
-        args.username, args.password, get_region_from_name(args.region), use_metric_units=(not args.imperial)
+        username= args.username,
+        password= args.password,
+        region= get_region_from_name(args.region),
+        hcaptcha_token=args.captcha,
+        use_metric_units=(not args.imperial),
     )
     await account.get_vehicles()
     vehicle = get_vehicle_or_return(account, args.vin)
@@ -328,6 +365,7 @@ def _add_default_arguments(parser: argparse.ArgumentParser):
     """Add the default arguments username, password, region to the parser."""
     parser.add_argument("username", help="Connected Drive username")
     parser.add_argument("password", help="Connected Drive password")
+    parser.add_argument("captcha", help="Connected Drive captcha")
     parser.add_argument("region", choices=valid_regions(),
                         help="Region of the Connected Drive account")
 
